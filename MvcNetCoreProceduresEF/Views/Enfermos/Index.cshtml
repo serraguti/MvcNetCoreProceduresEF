@@ -49,9 +49,18 @@
                 @Html.DisplayFor(modelItem => item.Genero)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-controller="Enfermos"
+                    asp-action="Details"
+                    asp-route-inscripcion="@item.Inscripcion"
+                    class="btn btn-info">
+                    Details
+                </a>
+                    <a asp-controller="Enfermos"
+                       asp-action="Delete"
+                       asp-route-inscripcion="@item.Inscripcion"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
             </td>
         </tr>
 }
