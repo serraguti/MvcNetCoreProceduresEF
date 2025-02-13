@@ -68,7 +68,7 @@ namespace MvcNetCoreProceduresEF.Repositories
             }
         }
 
-        public Enfermo FindEnfermo(string inscripcion)
+        public async Task<Enfermo> FindEnfermoAsync(string inscripcion)
         {
             //PARA LLAMAR A PROCEDIMIENTOS ALMACENADOS
             //CON PARAMETROS LA LLAMADA SE REALIZA MEDIANTE
@@ -82,16 +82,10 @@ namespace MvcNetCoreProceduresEF.Repositories
             //SI LOS DATOS QUE DEVUELVE EL PROCEDIMIENTO 
             //ESTAN MAPEADOS CON UN MODEL, PODEMOS UTILIZAR 
             //EL METODO FromSqlRaw CON LINQ
-            //CUANDO UTILIZAMOS LINQ CON PROCEDIMIENTOS ALMACENADOS
-            //LA CONSULTA Y LA EXTRACCION DE DATOS SE REALIZAN EN 
-            //DOS PASOS.
-            //NO SE PUEDE HACER LINQ Y EXTRAER A LA VEZ
             var consulta = 
-                this.context.Enfermos.FromSqlRaw(sql, pamInscripcion);
-            //PARA EXTRAR LOS DATOS NECESITAMOS TAMBIEN 
-            //EL METODO AsEnumerable()
-            Enfermo enfermo =
-                consulta.AsEnumerable().FirstOrDefault();
+               await this.context.Enfermos.FromSqlRaw(sql, pamInscripcion)
+                .ToListAsync();
+            Enfermo enfermo = consulta.FirstOrDefault();
             return enfermo;
         }
 
@@ -122,6 +116,25 @@ namespace MvcNetCoreProceduresEF.Repositories
             //PODER LLAMAR A PROCEDIMIENTOS DE CONSULTAS DE ACCION
             await this.context.Database
                 .ExecuteSqlRawAsync(sql, pamInscripcion);
+        }
+
+        public async Task InsertEnfermoAsync
+            (string apellido, string direccion, 
+            DateTime fechaNacimiento, string genero)
+        {
+            string sql = "SP_INSERT_ENFERMO @apellido, @direccion "
+                + ", @fechanac, @genero";
+            SqlParameter pamApellido =
+                new SqlParameter("@apellido", apellido);
+            SqlParameter pamDireccion =
+                new SqlParameter("@direccion", direccion);
+            SqlParameter pamFecha =
+                new SqlParameter("@fechanac", fechaNacimiento);
+            SqlParameter pamGen =
+                new SqlParameter("@genero", genero);
+            await this.context.Database
+                .ExecuteSqlRawAsync(sql, pamApellido, pamDireccion
+                , pamFecha, pamGen);
         }
     }
 }
