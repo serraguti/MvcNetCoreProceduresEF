@@ -68,6 +68,15 @@ namespace MvcNetCoreProceduresEF.Repositories
             }
         }
 
+        //public async Task FindEnfermo(string inscripcion)
+        //{
+        //    string sql = "SP_FIND_ENFERMO";
+        //    var consulta =
+        //       await this.context.Enfermos.FromSqlRaw(sql).ToListAsync();
+               
+        //    consulta.ToList()
+        //}
+
         public async Task<Enfermo> FindEnfermoAsync(string inscripcion)
         {
             //PARA LLAMAR A PROCEDIMIENTOS ALMACENADOS
