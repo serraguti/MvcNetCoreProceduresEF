@@ -3,7 +3,7 @@ using MvcNetCoreProceduresEF.Data;
 using MvcNetCoreProceduresEF.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddTransient<RepositoryTrabajadores>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<RepositoryEmpleados>();
