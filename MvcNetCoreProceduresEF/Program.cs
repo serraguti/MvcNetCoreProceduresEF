@@ -6,11 +6,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddTransient<RepositoryEmpleados>();
 string connectionString =
     builder.Configuration.GetConnectionString("SqlHospital");
 builder.Services.AddTransient<RepositoryEnfermos>();
-builder.Services.AddDbContext<EnfermosContext>
+builder.Services.AddDbContext<HospitalContext>
     (options => options.UseSqlServer(connectionString));
 
 var app = builder.Build();

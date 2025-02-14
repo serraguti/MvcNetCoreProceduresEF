@@ -3,11 +3,11 @@ using MvcNetCoreProceduresEF.Models;
 
 namespace MvcNetCoreProceduresEF.Data
 {
-    public class EnfermosContext: DbContext
+    public class HospitalContext: DbContext
     {
-        public EnfermosContext(DbContextOptions<EnfermosContext> options)
+        public HospitalContext(DbContextOptions<HospitalContext> options)
             : base(options) { }
-
+        public DbSet<VistaEmpleado> VistasEmpleados { get; set; }
         public DbSet<Enfermo> Enfermos { get; set; }
     }
 }
